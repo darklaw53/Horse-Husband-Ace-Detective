@@ -3,47 +3,101 @@ using UnityEngine.Windows;
 
 public class ColliderOverlapChecker : MonoBehaviour
 {
-    public Collider2D colNorth, colSouth, colWest, colEast;
+    public Direction dir;
 
     public CaracterController caracterController;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other == colNorth)
+        if (other.CompareTag("Wall"))
         {
-            caracterController.northCol = true;
+            switch (dir)
+            {
+                case Direction.North:
+                    caracterController.northCol = true;
+                    break;
+                case Direction.South:
+                    caracterController.southCol = true;
+                    break;
+                case Direction.West:
+                    caracterController.westCol = true;
+                    break;
+                case Direction.East:
+                    caracterController.eastCol = true;
+                    break;
+            }
         }
-        else if (other == colSouth)
+
+        if (other.CompareTag("Interactable"))
         {
-            caracterController.southCol = true;
-        }
-        else if (other == colWest)
-        {
-            caracterController.westCol = true;
-        }
-        else if (other == colEast)
-        {
-            caracterController.eastCol = true;
+            switch (dir)
+            {
+                case Direction.North:
+                    caracterController.northObj = other.gameObject;
+                    break;
+                case Direction.South:
+                    caracterController.southObj = other.gameObject;
+                    break;
+                case Direction.West:
+                    caracterController.westObj = other.gameObject;
+                    break;
+                case Direction.East:
+                    caracterController.eastObj = other.gameObject;
+                    break;
+            }
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other == colNorth)
+        if (other.CompareTag("Wall"))
         {
-            caracterController.northCol = false;
+            switch (dir)
+            {
+                case Direction.North:
+                    caracterController.northCol = false;
+                    break;
+                case Direction.South:
+                    caracterController.southCol = false;
+                    break;
+                case Direction.West:
+                    caracterController.westCol = false;
+                    break;
+                case Direction.East:
+                    caracterController.eastCol = false;
+                    break;
+            }
         }
-        else if (other == colSouth)
+
+        if (other.CompareTag("Interactable"))
         {
-            caracterController.southCol = false;
-        }
-        else if (other == colWest)
-        {
-            caracterController.westCol = false;
-        }
-        else if (other == colEast)
-        {
-            caracterController.eastCol = false;
+            switch (dir)
+            {
+                case Direction.North:
+                    if (other.gameObject == caracterController.northObj)
+                    {
+                        caracterController.northObj = null;
+                    }
+                    break;
+                case Direction.South:
+                    if (other.gameObject == caracterController.southObj)
+                    {
+                        caracterController.southObj = null;
+                    }
+                    break;
+                case Direction.West:
+                    if (other.gameObject == caracterController.westObj)
+                    {
+                        caracterController.westObj = null;
+                    }
+                    break;
+                case Direction.East:
+                    if (other.gameObject == caracterController.eastObj)
+                    {
+                        caracterController.eastObj = null;
+                    }
+                    break;
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ public enum Direction
 }
 
 [SelectionBase]
-public class CaracterController : MonoBehaviour
+public class CaracterController : Singleton<CaracterController>
 {
     public float _moveSpeed = 5f;
     public float tileSize = 1f;
@@ -21,9 +21,11 @@ public class CaracterController : MonoBehaviour
     public Direction lookDir;
 
     public bool northCol, southCol, eastCol, westCol;
+    [HideInInspector]public GameObject northObj, southObj, eastObj, westObj;
 
     Rigidbody2D _rb;
     bool isMoving = false;
+    float horizontalInput, verticalInput;
 
     //debug, delete later
     public GameObject marker;
@@ -33,7 +35,6 @@ public class CaracterController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
     }
 
-    #region Tick
     private void Update()
     {
         GatherInput();
@@ -43,60 +44,24 @@ public class CaracterController : MonoBehaviour
     {
         MovementUpdate();
     }
-    #endregion
 
-    #region Input Logic
     void GatherInput()
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
 
         if (horizontalInput != 0 || verticalInput != 0)
         {
-            if (!isMoving)
-            {
-                int horizontalMove = Mathf.RoundToInt(horizontalInput);
-                int verticalMove = Mathf.RoundToInt(verticalInput);
-
-                Vector2Int adjacentTilePosition = GetCurrentTilePosition();
-
-                if ((horizontalMove == 1 && !eastCol) || (horizontalMove == -1 && !westCol))
-                {
-                    isMoving = true;
-
-                    adjacentTilePosition = adjacentTilePosition + new Vector2Int(horizontalMove, 0);
-
-
-                    if (horizontalMove == 1) lookDir = Direction.East;
-                    else lookDir = Direction.West;
-                }
-
-                if ((verticalMove == 1 && !northCol) || (verticalMove == -1 && !southCol))
-                {
-                    isMoving = true;
-
-                    adjacentTilePosition = adjacentTilePosition + new Vector2Int(0, verticalMove);
-
-                    if (verticalMove == 1) lookDir = Direction.North;
-                    else lookDir = Direction.South;
-                }
-
-                Vector3 adjacentTileCenter = new Vector3(adjacentTilePosition.x * tileSize + tileSize / 2,
-                                                              adjacentTilePosition.y * tileSize + tileSize / 2, 0);
-
-                targetPosition = adjacentTileCenter;
-
-                if (marker != null) marker.transform.position = targetPosition;
-            }
+            CalculateTargetPosition();
         }
 
         if (isMoving && (Vector2)transform.position == targetPosition)
         {
             isMoving = false;
         }
-    }
 
-    #endregion
+        if (Input.GetKeyDown(KeyCode.E)) Interact();
+    }
 
     public Vector2Int GetCurrentTilePosition()
     {
@@ -108,7 +73,62 @@ public class CaracterController : MonoBehaviour
         return tilePosition;
     }
 
-    #region Movement Logic
+    void Interact()
+    {
+        if (!isMoving) 
+        {
+            switch (lookDir)
+            {
+                case Direction.North:
+                    if (northObj != null) northObj.GetComponent<Interactabe>().Activate();
+                    break;
+                case Direction.South:
+                    if (southObj != null) southObj.GetComponent<Interactabe>().Activate();
+                    break;
+                case Direction.West:
+                    if (westObj != null) westObj.GetComponent<Interactabe>().Activate();
+                    break;
+                case Direction.East:
+                    if (eastObj != null) eastObj.GetComponent<Interactabe>().Activate();
+                    break;
+            }
+        }
+    }
+
+    void CalculateTargetPosition()
+    {
+        if (!isMoving)
+        {
+            int horizontalMove = Mathf.RoundToInt(horizontalInput);
+            int verticalMove = Mathf.RoundToInt(verticalInput);
+
+            Vector2Int adjacentTilePosition = GetCurrentTilePosition();
+
+            if (horizontalMove != 0 && ((horizontalMove == 1 && !eastCol) || (horizontalMove == -1 && !westCol)))
+            {
+                isMoving = true;
+                adjacentTilePosition += new Vector2Int(horizontalMove, 0);
+                lookDir = horizontalMove == 1 ? Direction.East : Direction.West;
+            }
+            else if (verticalMove != 0 && ((verticalMove == 1 && !northCol) || (verticalMove == -1 && !southCol)))
+            {
+                isMoving = true;
+                adjacentTilePosition += new Vector2Int(0, verticalMove);
+                lookDir = verticalMove == 1 ? Direction.North : Direction.South;
+            }
+
+            if (horizontalMove != 0 || verticalMove != 0)
+            {
+                Vector3 adjacentTileCenter = new Vector3(adjacentTilePosition.x * tileSize + tileSize / 2,
+                                                          adjacentTilePosition.y * tileSize + tileSize / 2, 0);
+                targetPosition = adjacentTileCenter;
+
+                if (marker != null)
+                    marker.transform.position = targetPosition;
+            }
+        }
+    }
+
     void MovementUpdate()
     {
         if (isMoving)
@@ -117,5 +137,4 @@ public class CaracterController : MonoBehaviour
             _rb.MovePosition(newPosition);
         }
     }
-    #endregion
 }
