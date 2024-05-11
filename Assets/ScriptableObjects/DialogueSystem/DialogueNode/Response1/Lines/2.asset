@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182e101a812bff449b0b33da49bc4864, type: 3}
+  m_Name: 2
+  m_EditorClassIdentifier: 
+  text: I forgive u :3
+  character: {fileID: 11400000, guid: da8ab3a8c9a56c34b9b17f6fcfca64a0, type: 2}
+  emotion: 0
+  quick: 0
+  right: 1

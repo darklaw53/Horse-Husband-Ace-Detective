@@ -104,17 +104,23 @@ public class CaracterController : Singleton<CaracterController>
 
             Vector2Int adjacentTilePosition = GetCurrentTilePosition();
 
-            if (horizontalMove != 0 && ((horizontalMove == 1 && !eastCol) || (horizontalMove == -1 && !westCol)))
+            if (horizontalMove != 0)
             {
-                isMoving = true;
-                adjacentTilePosition += new Vector2Int(horizontalMove, 0);
                 lookDir = horizontalMove == 1 ? Direction.East : Direction.West;
+                if ((horizontalMove == 1 && !eastCol) || (horizontalMove == -1 && !westCol))
+                {
+                    isMoving = true;
+                    adjacentTilePosition += new Vector2Int(horizontalMove, 0);
+                }
             }
-            else if (verticalMove != 0 && ((verticalMove == 1 && !northCol) || (verticalMove == -1 && !southCol)))
+            else if (verticalMove != 0)
             {
-                isMoving = true;
-                adjacentTilePosition += new Vector2Int(0, verticalMove);
                 lookDir = verticalMove == 1 ? Direction.North : Direction.South;
+                if ((verticalMove == 1 && !northCol) || (verticalMove == -1 && !southCol))
+                {
+                    isMoving = true;
+                    adjacentTilePosition += new Vector2Int(0, verticalMove);
+                }
             }
 
             if (horizontalMove != 0 || verticalMove != 0)

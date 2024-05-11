@@ -9,4 +9,5 @@ public class TileMapManager : Singleton<TileMapManager>
     public Tilemap intangirbleInteractableTilemap;
     public Tilemap background;
     public Tilemap wall;
+    public Tile invisible;
 }
