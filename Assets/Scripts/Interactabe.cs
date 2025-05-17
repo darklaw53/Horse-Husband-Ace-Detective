@@ -1,39 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class Interactabe : MonoBehaviour
 {
-    [HideInInspector]public Vector3Int cellPosition;
+    public GameObject notificationSprite;
 
-    public virtual void Start()
+    public void Select()
     {
-        CenterGameObject();
+        notificationSprite.SetActive(true);
     }
 
-    private void CenterGameObject()
+    public void UnSelect()
     {
-        if (TileMapManager.Instance.background == null)
-        {
-            Debug.LogError("Tilemap is not assigned on " + gameObject.name);
-            return;
-        }
-
-        cellPosition = TileMapManager.Instance.background.WorldToCell(transform.position);
-
-        Vector3 cellCenterWorldPosition = TileMapManager.Instance.background.GetCellCenterWorld(cellPosition);
-
-        transform.position = cellCenterWorldPosition;
+        notificationSprite.SetActive(false);
     }
 
-    public void ReCenter()
-    {
-        CenterGameObject();
-    }
-
-    public virtual void Activate()
-    {
-
-    }
+    public virtual void Activate(){}
 }

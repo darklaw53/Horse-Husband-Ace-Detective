@@ -8,6 +8,8 @@ public class RoomController : MonoBehaviour
     public GameObject currentRoom;
     public GameObject player;
 
+    public LayerMask floorMask;
+
     void Awake()
     {
         if (Instance == null) Instance = this;
@@ -24,13 +26,21 @@ public class RoomController : MonoBehaviour
         DoorTarget target = FindTargetDoor(entryDoorID, currentRoom);
         if (target != null)
         {
-            player.transform.position = target.spawnPoint.position;
+            Vector3 spawnPosition = target.spawnPoint.position;
+
+            if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hit, 10f, floorMask))
+            {
+                spawnPosition.y = hit.point.y;
+            }
+
+            player.transform.position = spawnPosition;
         }
         else
         {
-            Debug.LogError($"Door ID '{entryDoorID}' not found in new room. Genius move.");
+            Debug.LogError($"Door ID '{entryDoorID}' not found in new room. Brilliant. Just brilliant.");
         }
     }
+
 
     private DoorTarget FindTargetDoor(string id, GameObject room)
     {

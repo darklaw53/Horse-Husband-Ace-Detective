@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -12,6 +13,16 @@ public class ThirdPersonController : MonoBehaviour
 
     private Rigidbody rb;
 
+    [HideInInspector]
+    public Interactabe targetInteractable;
+
+    float horizontal;
+    float vertical;
+    float rotateInput;
+    bool isMoving;
+
+    public bool moveEnabled = true;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -23,12 +34,49 @@ public class ThirdPersonController : MonoBehaviour
             cameraPivot = cameraTransform.parent;
     }
 
-    void FixedUpdate()
+    private void Update()
     {
-        RotateCameraWithKeys();
+        if (moveEnabled)
+        {
+            GatherInput();
+        }
+    }
 
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+    private void FixedUpdate()
+    {
+        MovementUpdate();
+    }
+
+    void GatherInput()
+    {
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
+
+        rotateInput = 0f;
+
+        if (Input.GetKey(KeyCode.Q))
+            rotateInput = -1f;
+        else if (Input.GetKey(KeyCode.E))
+            rotateInput = 1f;
+
+        if (Input.GetKeyDown(KeyCode.Space)) Interact();
+    }
+
+    void MovementUpdate()
+    {
+        if (rotateInput != 0f && cameraPivot != null)
+        {
+            cameraPivot.Rotate(Vector3.up, rotateInput * cameraRotateSpeed * Time.deltaTime);
+        }
+
+        if (horizontal == 0 && vertical == 0)
+        {
+            isMoving = false;
+        }
+        else
+        {
+            isMoving = true;
+        }
 
         Vector3 inputDirection = new Vector3(horizontal, 0, vertical).normalized;
 
@@ -58,18 +106,11 @@ public class ThirdPersonController : MonoBehaviour
         }
     }
 
-    void RotateCameraWithKeys()
+    void Interact()
     {
-        float rotateInput = 0f;
-
-        if (Input.GetKey(KeyCode.Q))
-            rotateInput = -1f;
-        else if (Input.GetKey(KeyCode.E))
-            rotateInput = 1f;
-
-        if (rotateInput != 0f && cameraPivot != null)
+        if (!isMoving && targetInteractable != null)
         {
-            cameraPivot.Rotate(Vector3.up, rotateInput * cameraRotateSpeed * Time.deltaTime);
+            targetInteractable.GetComponent<Interactabe>().Activate();
         }
     }
 }
