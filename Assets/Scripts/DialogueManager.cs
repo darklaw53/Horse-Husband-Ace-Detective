@@ -19,10 +19,17 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public void StartDialogue(DialogueNodeSO dialogue)
     {
+        ThirdPersonController.Instance.moveEnabled = false;
         currentLine = 0;
         currentDialogueNode = dialogue;
         UpdateText();
         chatBox.SetActive(true);
+    }
+
+    public void FinishDiologue()
+    {
+        chatBox.SetActive(false);
+        ThirdPersonController.Instance.moveEnabled = true;
     }
 
     public void NextLine()
@@ -30,7 +37,7 @@ public class DialogueManager : Singleton<DialogueManager>
         currentLine++;
         if (currentLine < currentDialogueNode.lines.Count) UpdateText();
         else if (currentDialogueNode.options.Count > 0) ExposeOptions();
-        else chatBox.SetActive(false);
+        else FinishDiologue();
     }
 
     void UpdateText()

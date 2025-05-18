@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class ThirdPersonController : MonoBehaviour
+public class ThirdPersonController : Singleton<ThirdPersonController>
 {
     public float moveSpeed = 5f;
     public float rotationSpeed = 10f;
@@ -21,6 +21,7 @@ public class ThirdPersonController : MonoBehaviour
     float rotateInput;
     bool isMoving;
 
+    [HideInInspector]
     public bool moveEnabled = true;
 
     void Start()

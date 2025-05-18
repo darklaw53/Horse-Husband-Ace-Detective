@@ -1,20 +1,12 @@
 using UnityEngine;
 
-public class RoomController : MonoBehaviour
+public class RoomController : Singleton<RoomController>
 {
-    public static RoomController Instance;
-
     public Transform roomParent;
     public GameObject currentRoom;
     public GameObject player;
 
     public LayerMask floorMask;
-
-    void Awake()
-    {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-    }
 
     public void SwapRoom(GameObject newRoomPrefab, string entryDoorID)
     {
