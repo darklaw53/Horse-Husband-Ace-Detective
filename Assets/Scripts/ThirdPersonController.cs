@@ -11,6 +11,8 @@ public class ThirdPersonController : Singleton<ThirdPersonController>
     public Transform cameraTransform;
     public float cameraRotateSpeed = 100f;
 
+    public bool useCameraRelativeMovement = true;
+
     private Rigidbody rb;
 
     [HideInInspector]
@@ -83,15 +85,25 @@ public class ThirdPersonController : Singleton<ThirdPersonController>
 
         if (inputDirection.magnitude >= 0.1f)
         {
-            Vector3 camForward = cameraTransform.forward;
-            Vector3 camRight = cameraTransform.right;
+            Vector3 moveDirection;
 
-            camForward.y = 0;
-            camRight.y = 0;
-            camForward.Normalize();
-            camRight.Normalize();
+            if (useCameraRelativeMovement && cameraTransform != null)
+            {
+                Vector3 camForward = cameraTransform.forward;
+                Vector3 camRight = cameraTransform.right;
 
-            Vector3 moveDirection = camForward * inputDirection.z + camRight * inputDirection.x;
+                camForward.y = 0;
+                camRight.y = 0;
+                camForward.Normalize();
+                camRight.Normalize();
+
+                moveDirection = camForward * inputDirection.z + camRight * inputDirection.x;
+            }
+            else
+            {
+                moveDirection = inputDirection;
+            }
+
             moveDirection.Normalize();
 
             Vector3 targetVelocity = moveDirection * moveSpeed;

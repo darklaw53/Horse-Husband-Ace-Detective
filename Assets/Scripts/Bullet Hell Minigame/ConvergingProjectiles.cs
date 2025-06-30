@@ -7,10 +7,9 @@ public class ConvergingProjectiles : MonoBehaviour
 {
     [Header("Settings")]
     public List<Transform> spawnPoints;
-    public GameObject projectilePrefab;
+    public List<GameObject> projectilePrefabs;
     public float spawnInterval = 1f;
-
-    private Vector3 centerPoint;
+    public Transform centerPoint;
 
     private void Start()
     {
@@ -20,18 +19,13 @@ public class ConvergingProjectiles : MonoBehaviour
             return;
         }
 
-        CalculateCenterPoint();
-        StartCoroutine(SpawnProjectiles());
-    }
-
-    private void CalculateCenterPoint()
-    {
-        centerPoint = Vector3.zero;
-        foreach (Transform point in spawnPoints)
+        if (projectilePrefabs == null || projectilePrefabs.Count == 0)
         {
-            centerPoint += point.position;
+            Debug.LogError("You must assign at least one projectile prefab, Master. Please.");
+            return;
         }
-        centerPoint /= spawnPoints.Count;
+
+        StartCoroutine(SpawnProjectiles());
     }
 
     private IEnumerator SpawnProjectiles()
@@ -53,10 +47,11 @@ public class ConvergingProjectiles : MonoBehaviour
             float t = Random.Range(0f, 1f);
             Vector3 spawnPos = Vector3.Lerp(basePoint.position, neighbor.position, t);
 
-            Vector3 direction = (centerPoint - spawnPos).normalized;
+            Vector3 direction = (centerPoint.position - spawnPos).normalized;
             Quaternion rotation = Quaternion.LookRotation(direction);
 
-            Instantiate(projectilePrefab, spawnPos, rotation);
+            GameObject chosenProjectile = projectilePrefabs[Random.Range(0, projectilePrefabs.Count)];
+            Instantiate(chosenProjectile, spawnPos, rotation);
         }
     }
 
