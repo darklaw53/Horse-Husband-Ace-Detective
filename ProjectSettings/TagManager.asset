@@ -7,6 +7,7 @@ TagManager:
   - Wall
   - Interactable
   - PlayerInteractBox
+  - Projectile
   layers:
   - Default
   - TransparentFX
