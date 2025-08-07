@@ -8,7 +8,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 112279890492109295, guid: bf329bd54c6b76045b3792f0fda25fea, type: 3}
+      propertyPath: doorID
+      value: door1R
+      objectReference: {fileID: 0}
     - target: {fileID: 424690579140228070, guid: bf329bd54c6b76045b3792f0fda25fea, type: 3}
+      propertyPath: doorID
+      value: door1L
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064469692397930082, guid: bf329bd54c6b76045b3792f0fda25fea, type: 3}
       propertyPath: doorID
       value: door1L
       objectReference: {fileID: 0}
@@ -20,6 +28,10 @@ PrefabInstance:
       propertyPath: targetRoomPrefab
       value: 
       objectReference: {fileID: 7815278632464253036, guid: f98549e633c5f7949853396baf92bb06, type: 3}
+    - target: {fileID: 2618945875516301193, guid: bf329bd54c6b76045b3792f0fda25fea, type: 3}
+      propertyPath: doorID
+      value: door1R
+      objectReference: {fileID: 0}
     - target: {fileID: 3527572721623148893, guid: bf329bd54c6b76045b3792f0fda25fea, type: 3}
       propertyPath: targetDoorID
       value: 2door
@@ -30,7 +42,7 @@ PrefabInstance:
       objectReference: {fileID: 4289768280874320197, guid: 70f1ecea13fff744a8e798d11d3b3bbb, type: 3}
     - target: {fileID: 3644989638198782916, guid: bf329bd54c6b76045b3792f0fda25fea, type: 3}
       propertyPath: targetDoorID
-      value: Door3
+      value: door3
       objectReference: {fileID: 0}
     - target: {fileID: 3644989638198782916, guid: bf329bd54c6b76045b3792f0fda25fea, type: 3}
       propertyPath: targetRoomPrefab

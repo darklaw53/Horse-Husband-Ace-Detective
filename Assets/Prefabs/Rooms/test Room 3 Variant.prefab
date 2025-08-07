@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1064469692397930082, guid: bf329bd54c6b76045b3792f0fda25fea, type: 3}
       propertyPath: doorID
-      value: door1R
+      value: door3
       objectReference: {fileID: 0}
     - target: {fileID: 3527572721623148893, guid: bf329bd54c6b76045b3792f0fda25fea, type: 3}
       propertyPath: targetDoorID
@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8416386891382988129, guid: bf329bd54c6b76045b3792f0fda25fea, type: 3}
       propertyPath: targetDoorID
-      value: Door3
+      value: door1R
       objectReference: {fileID: 0}
     - target: {fileID: 8416386891382988129, guid: bf329bd54c6b76045b3792f0fda25fea, type: 3}
       propertyPath: targetRoomPrefab

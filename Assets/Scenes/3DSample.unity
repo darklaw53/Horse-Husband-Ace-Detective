@@ -496,6 +496,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: test Room 1 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5205507262249473656, guid: 842e5122eeb524f4fb78cf00f6049efb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7131541024154810483, guid: 842e5122eeb524f4fb78cf00f6049efb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

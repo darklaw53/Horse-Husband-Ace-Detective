@@ -19,10 +19,10 @@ TagManager:
   - CrossTrigger
   - Floor
   - Cable
-  - 
-  - 
-  - 
-  - 
+  - SouthWall
+  - NorthWall
+  - WestWall
+  - EastWall
   - 
   - 
   - 
