@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using static DialogueTreeSO;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
-    public DialogueNodeSO currentDialogueNode;
+    public DialogueTreeSO currentDialogueTree;
+    public DialogueNode currentDialogueNode;
     public TextMeshProUGUI textBox;
 
     public int currentLine = 0;
@@ -17,13 +18,18 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public GameObject chatBox;
 
-    public void StartDialogue(DialogueNodeSO dialogue)
+    public void StartDialogue(DialogueTreeSO dialogue)
     {
         ThirdPersonController.Instance.moveEnabled = false;
-        currentLine = 0;
-        currentDialogueNode = dialogue;
-        UpdateText();
+        currentDialogueTree = dialogue;
+        LoadNode(currentDialogueTree.GetStartNode());
         chatBox.SetActive(true);
+    }
+
+    public void LoadNode(DialogueNode node)
+    {
+        currentDialogueNode = node;
+        UpdateText();
     }
 
     public void FinishDiologue()
@@ -32,17 +38,26 @@ public class DialogueManager : Singleton<DialogueManager>
         ThirdPersonController.Instance.moveEnabled = true;
     }
 
-    public void NextLine()
+    public void OnFinishedTyping()
     {
-        currentLine++;
-        if (currentLine < currentDialogueNode.lines.Count) UpdateText();
-        else if (currentDialogueNode.options.Count > 0) ExposeOptions();
-        else FinishDiologue();
+        if (currentDialogueNode.IsTerminalNode)
+        {
+            FinishDiologue();
+            return;
+        }
+
+        if (currentDialogueNode.options.Count > 1)
+            ExposeOptions();
+        else if (currentDialogueNode.options.Count == 1)
+            LoadNode(currentDialogueTree.GetNodeById(currentDialogueNode.ActionOption.nextNodeId));
+        else
+            FinishDiologue();
     }
 
     void UpdateText()
     {
-        textBox.SetText(currentDialogueNode.lines[currentLine].text);
+        if (currentDialogueNode == null || textBox == null) return;
+        textBox.SetText(currentDialogueNode.text);
         textBox.ForceMeshUpdate(true);
     }
 
@@ -51,18 +66,18 @@ public class DialogueManager : Singleton<DialogueManager>
         currentLine = 0;
         textBox.text = "";
 
-        foreach (DialogueOptionSO option in currentDialogueNode.options) 
+        foreach (DialogueOption option in currentDialogueNode.options)
         {
             GameObject buttonGO = Instantiate(optionPrefab, optionHolder);
-            Button button = buttonGO.GetComponent<Button>();
-            button.GetComponentInChildren<TextMeshProUGUI>().text = option.text;
+            OptionButton button = buttonGO.GetComponent<OptionButton>();
+            button.text.text = option.optionText;
 
-            button.onClick.AddListener(() => ButtonClicked(option));
+            button.button.onClick.AddListener(() => ButtonClicked(option));
             instantiatedButtons.Add(buttonGO);
         }
     }
 
-    void ButtonClicked(DialogueOptionSO option)
+    void ButtonClicked(DialogueOption option)
     {
         foreach (GameObject buttonGO in instantiatedButtons)
         {
@@ -70,7 +85,11 @@ public class DialogueManager : Singleton<DialogueManager>
         }
         instantiatedButtons.Clear();
 
-        StartDialogue(option.nextNode);
+        DialogueNode nextNode = currentDialogueTree.GetNodeById(option.nextNodeId);
+        if (nextNode != null)
+            LoadNode(nextNode);
+        else
+            FinishDiologue();
     }
 
     public List<string> SplitString(string input)

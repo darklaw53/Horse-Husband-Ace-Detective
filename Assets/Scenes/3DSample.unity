@@ -545,6 +545,74 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 842e5122eeb524f4fb78cf00f6049efb, type: 3}
+--- !u!1 &1680625486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1680625489}
+  - component: {fileID: 1680625488}
+  - component: {fileID: 1680625487}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1680625487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680625486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &1680625488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680625486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1680625489
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680625486}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1764873620
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,7 +752,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb894779aeefe114c9976768fb232c84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentDialogueNode: {fileID: 0}
+  currentDialogueTree: {fileID: 0}
+  currentDialogueNode:
+    id: 
+    text: 
+    options: []
+    position: {x: 0, y: 0}
+    isStartNode: 0
+    isActionNode: 0
+    actionCommandIds: []
   textBox: {fileID: 1886211214}
   currentLine: 0
   optionPrefab: {fileID: 7715491752035275837, guid: 47c962aba2cc62d4f9e1d972736e3ce1, type: 3}
@@ -743,8 +819,9 @@ MonoBehaviour:
   charactersPerSecond: 20
   speedMult: 5
   interpunctuationDelay: 0.5
-  _speedUpRequested: 0
-  _typewriterFinished: 0
+  OnTypingFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1886211214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -895,7 +972,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1086,3 +1163,4 @@ SceneRoots:
   - {fileID: 1764873621}
   - {fileID: 1538403935}
   - {fileID: 1447429545}
+  - {fileID: 1680625489}

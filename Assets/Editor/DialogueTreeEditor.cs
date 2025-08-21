@@ -209,7 +209,7 @@ public class DialogueTreeEditor : EditorWindow
         {
             Color fill = node.isStartNode && node.isActionNode ? new(0.3f, 0.9f, 0.9f, 0.2f) :
                          node.isStartNode ? new(0.3f, 0.9f, 0.3f, 0.2f) :
-                                                              new(0.3f, 0.3f, 0.9f, 0.2f);
+                                            new(0.3f, 0.3f, 0.9f, 0.2f);
             Color outline = fill * 0.5f; outline.a = 0.4f;
             Handles.DrawSolidRectangleWithOutline(nodeRect, fill, outline);
         }
@@ -235,22 +235,37 @@ public class DialogueTreeEditor : EditorWindow
             node.isStartNode = true;
             EditorUtility.SetDirty(dialogueTree);
         }
-
         EditorGUILayout.EndHorizontal();
 
         if (node.isActionNode)
         {
-            node.onTriggerAction ??= new UnityEvent();
-            SerializedObject so = new(dialogueTree);
-            int idx = dialogueTree.nodes.IndexOf(node);
-            if (idx >= 0 && idx < so.FindProperty("nodes").arraySize)
+            GUILayout.Label("Action Commands:");
+            if (node.actionCommandIds == null)
+                node.actionCommandIds = new List<string>();
+
+            for (int i = 0; i < node.actionCommandIds.Count; i++)
             {
-                var eventProp = so.FindProperty("nodes").GetArrayElementAtIndex(idx).FindPropertyRelative("onTriggerAction");
-                EditorGUILayout.PropertyField(eventProp, new GUIContent("Action Event"));
-                so.ApplyModifiedProperties();
+                EditorGUILayout.BeginHorizontal();
+                node.actionCommandIds[i] = EditorGUILayout.TextField(node.actionCommandIds[i]);
+
+                if (GUILayout.Button("x", GUILayout.Width(20)))
+                {
+                    node.actionCommandIds.RemoveAt(i--);
+                    EditorUtility.SetDirty(dialogueTree);
+                    EditorGUILayout.EndHorizontal();
+                    continue;
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+
+            if (GUILayout.Button("+ Add Command"))
+            {
+                node.actionCommandIds.Add("");
+                EditorUtility.SetDirty(dialogueTree);
             }
 
             GUILayout.Space(4);
+
             EditorGUILayout.BeginHorizontal();
             GUILayout.Label("Link to next node:");
             if (GUILayout.Button("Link", GUILayout.Width(50)) && node.ActionOption != null)
@@ -261,10 +276,9 @@ public class DialogueTreeEditor : EditorWindow
                 node.ActionOption.nextNodeId = null;
             }
 
-            linkingButtonRect = new Rect(GUILayoutUtility.GetLastRect().position + nodeRect.position, GUILayoutUtility.GetLastRect().size);
-
             Rect btnRect = GUILayoutUtility.GetLastRect();
-            optionButtonRects[node.ActionOption] = new Rect(btnRect.position + nodeRect.position, btnRect.size);
+            linkingButtonRect = new Rect(btnRect.position + nodeRect.position, btnRect.size);
+            optionButtonRects[node.ActionOption] = linkingButtonRect;
 
             EditorGUILayout.EndHorizontal();
         }
@@ -304,8 +318,8 @@ public class DialogueTreeEditor : EditorWindow
                     opt.nextNodeId = null;
                 }
 
-                Rect btnRect = GUILayoutUtility.GetLastRect();
-                optionButtonRects[opt] = new Rect(btnRect.position + nodeRect.position, btnRect.size);
+                Rect optRect = GUILayoutUtility.GetLastRect();
+                optionButtonRects[opt] = new Rect(optRect.position + nodeRect.position, optRect.size);
                 EditorGUILayout.EndHorizontal();
             }
 
@@ -323,43 +337,29 @@ public class DialogueTreeEditor : EditorWindow
     float CalculateNodeHeight(DialogueTreeSO.DialogueNode node)
     {
         float height = 0f;
+
         height += EditorGUIUtility.singleLineHeight * 1.2f;
 
         GUIStyle textAreaStyle = EditorStyles.textArea;
         float textHeight = textAreaStyle.CalcHeight(new GUIContent(node.text), nodeWidth - 20);
         textHeight = Mathf.Max(textHeight, 60f);
         height += textHeight;
-
-        height += EditorGUIUtility.singleLineHeight; 
-
-        int optionCount = node.options != null ? node.options.Count : 0;
+        height += EditorGUIUtility.singleLineHeight;
 
         if (!node.isActionNode)
         {
+            int optionCount = node.options != null ? node.options.Count : 0;
             height += optionCount * (EditorGUIUtility.singleLineHeight + 4f);
-
             height += EditorGUIUtility.singleLineHeight;
         }
         else
         {
-            SerializedObject so = new SerializedObject(dialogueTree);
-            SerializedProperty nodesProp = so.FindProperty("nodes");
-
-            int nodeIndex = dialogueTree.nodes.IndexOf(node);
-            if (nodeIndex >= 0)
-            {
-                SerializedProperty nodeProp = nodesProp.GetArrayElementAtIndex(nodeIndex);
-                SerializedProperty unityEventProp = nodeProp.FindPropertyRelative("onTriggerAction");
-
-                height += EditorGUI.GetPropertyHeight(unityEventProp, true);
-            }
-
-            height -= EditorGUIUtility.singleLineHeight + 30f;
+            int actionCount = node.actionCommandIds != null ? node.actionCommandIds.Count : 0;
+            height += actionCount * (EditorGUIUtility.singleLineHeight + 2f);
         }
 
         return height;
     }
-
 
     void ProcessNodeEvents(Rect nodeRect, DialogueTreeSO.DialogueNode node)
     {

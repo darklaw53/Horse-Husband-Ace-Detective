@@ -19,84 +19,64 @@ MonoBehaviour:
     - optionText: 
       nextNodeId: 066b02da-0e03-4195-9ec5-8831be292fc5
       isHiddenForAction: 1
-    - optionText: New Option
-      nextNodeId: 
+    - optionText: hi :)
+      nextNodeId: 066b02da-0e03-4195-9ec5-8831be292fc5
       isHiddenForAction: 0
-    - optionText: New Option
-      nextNodeId: 
+    - optionText: bye looser
+      nextNodeId: 2786346e-2138-44af-a5a2-553220012144
       isHiddenForAction: 0
-    - optionText: New Option
-      nextNodeId: 
-      isHiddenForAction: 0
-    - optionText: New Option
-      nextNodeId: 
-      isHiddenForAction: 0
-    position: {x: 17.400696, y: 147.75557}
+    position: {x: 88.01709, y: 133.03757}
     isStartNode: 1
-    isActionNode: 1
-    onTriggerAction:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+    isActionNode: 0
+    actionCommandIds:
+    - Shake Camera
+    - 
   - id: b9dcc2f0-32a6-4ae1-a5ec-64b9ffc4cbe5
-    text: New Dialogue Node
+    text: Yeah well... better gtf outta here bitch!
     options:
     - optionText: 
       nextNodeId: 
       isHiddenForAction: 1
-    position: {x: 488.5993, y: 342.95596}
+    position: {x: 805.98376, y: 130.37386}
     isStartNode: 0
     isActionNode: 0
-    onTriggerAction:
-      m_PersistentCalls:
-        m_Calls: []
+    actionCommandIds: []
   - id: 066b02da-0e03-4195-9ec5-8831be292fc5
-    text: 
+    text: I hate you
     options:
     - optionText: 
       nextNodeId: 
       isHiddenForAction: 1
-    - optionText: New Option
+    - optionText: Samesies
       nextNodeId: b9dcc2f0-32a6-4ae1-a5ec-64b9ffc4cbe5
       isHiddenForAction: 0
-    position: {x: 352.31946, y: 69.24399}
+    - optionText: That makes me SO sad!
+      nextNodeId: ae9bc168-c6bb-4428-a052-8052404d71cf
+      isHiddenForAction: 0
+    position: {x: 450.1062, y: 133.69997}
     isStartNode: 0
     isActionNode: 0
-    onTriggerAction:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+    actionCommandIds: []
+  - id: ae9bc168-c6bb-4428-a052-8052404d71cf
+    text: cry me a river pony boy
+    options:
+    - optionText: ok...
+      nextNodeId: 5628ec70-7823-4923-b4ee-4549543bd824
+      isHiddenForAction: 0
+    - optionText: 
+      nextNodeId: 
+      isHiddenForAction: 1
+    position: {x: 806.0006, y: 296.7005}
+    isStartNode: 0
+    isActionNode: 0
+    actionCommandIds: []
+  - id: 5628ec70-7823-4923-b4ee-4549543bd824
+    text: bye :)
+    options:
+    - optionText: 
+      nextNodeId: 
+      isHiddenForAction: 1
+    position: {x: 1154.8074, y: 312.70047}
+    isStartNode: 0
+    isActionNode: 0
+    actionCommandIds: []

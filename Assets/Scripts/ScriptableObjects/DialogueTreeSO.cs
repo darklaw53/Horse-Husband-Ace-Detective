@@ -16,7 +16,7 @@ public class DialogueTreeSO : ScriptableObject
         public bool isStartNode = false;
 
         public bool isActionNode;
-        public List<string> actionIds;
+        public List<string> actionCommandIds = new();
 
         public DialogueOption ActionOption
         {
@@ -34,6 +34,17 @@ public class DialogueTreeSO : ScriptableObject
                     options.Add(hiddenOption);
                 }
                 return hiddenOption;
+            }
+        }
+
+        public bool IsTerminalNode
+        {
+            get
+            {
+                if (options == null || options.Count == 0)
+                    return true;
+
+                return options.All(opt => string.IsNullOrEmpty(opt.nextNodeId));
             }
         }
     }

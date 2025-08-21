@@ -150,10 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   notificationSprite: {fileID: 3985491503530324563}
-  dialogues:
-  - {fileID: 11400000, guid: e0663b52f0b3d004a9ebc01653d5d699, type: 2}
-  - {fileID: 11400000, guid: d64dd9567e82e3c4c9a453d60b3083cd, type: 2}
-  - {fileID: 11400000, guid: a5fd521332e3557458b1657d7365cb39, type: 2}
+  currentDialogue: {fileID: 11400000, guid: b761d8a3bda343b48b492995bcac62e6, type: 2}
 --- !u!1 &3985491503530324563
 GameObject:
   m_ObjectHideFlags: 0
