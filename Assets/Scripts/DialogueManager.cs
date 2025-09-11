@@ -17,6 +17,7 @@ public class DialogueManager : Singleton<DialogueManager>
     List<GameObject> instantiatedButtons = new List<GameObject>();
 
     public GameObject chatBox;
+    public DialogueActionManager actionManager;
 
     public void StartDialogue(DialogueTreeSO dialogue)
     {
@@ -29,7 +30,8 @@ public class DialogueManager : Singleton<DialogueManager>
     public void LoadNode(DialogueNode node)
     {
         currentDialogueNode = node;
-        UpdateText();
+        if (currentDialogueNode.isActionNode) ExecuteAction();
+        else UpdateText();
     }
 
     public void FinishDiologue()
@@ -54,6 +56,20 @@ public class DialogueManager : Singleton<DialogueManager>
             FinishDiologue();
     }
 
+    void ExecuteAction()
+    {
+        foreach (var item in currentDialogueNode.actionCommandIds)
+        {
+            actionManager.ExecuteAction(item);
+        }
+
+        DialogueNode nextNode = currentDialogueTree.GetNodeById(currentDialogueNode.ActionOption.nextNodeId);
+        if (nextNode != null)
+            LoadNode(nextNode);
+        else
+            FinishDiologue();
+    }
+
     void UpdateText()
     {
         if (currentDialogueNode == null || textBox == null) return;
@@ -68,6 +84,8 @@ public class DialogueManager : Singleton<DialogueManager>
 
         foreach (DialogueOption option in currentDialogueNode.options)
         {
+            if (option.isHiddenForAction) continue;
+
             GameObject buttonGO = Instantiate(optionPrefab, optionHolder);
             OptionButton button = buttonGO.GetComponent<OptionButton>();
             button.text.text = option.optionText;

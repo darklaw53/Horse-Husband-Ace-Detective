@@ -718,6 +718,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1812576213}
   - component: {fileID: 1812576214}
+  - component: {fileID: 1812576215}
   m_Layer: 0
   m_Name: DialogueController
   m_TagString: Untagged
@@ -766,6 +767,24 @@ MonoBehaviour:
   optionPrefab: {fileID: 7715491752035275837, guid: 47c962aba2cc62d4f9e1d972736e3ce1, type: 3}
   optionHolder: {fileID: 830084158}
   chatBox: {fileID: 2022760073}
+  actionManager: {fileID: 0}
+--- !u!114 &1812576215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812576212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56b33f8f5edfc542bc08df77efaf2e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myEvents:
+  - Key: 
+    Value:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &1886211211
 GameObject:
   m_ObjectHideFlags: 0
