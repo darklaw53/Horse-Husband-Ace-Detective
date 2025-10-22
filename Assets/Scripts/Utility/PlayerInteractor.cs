@@ -18,9 +18,10 @@ public class PlayerInteractor : MonoBehaviour
     {
         if (other.CompareTag("Interactable"))
         {
+            caracterController.targetInteractable.UnSelect();
+
             if (other.gameObject == caracterController.targetInteractable)
             {
-                caracterController.targetInteractable.UnSelect();
                 caracterController.targetInteractable = null;
             }
         }

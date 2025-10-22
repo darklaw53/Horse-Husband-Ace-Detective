@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -13,6 +12,10 @@ public class ThirdPersonController : Singleton<ThirdPersonController>
     public bool useCameraRelativeMovement = true;
 
     public Animator animator;
+
+    [Header("Animation Settings")]
+    [Tooltip("Controls how fast the animations play.")]
+    public float animationSpeed = 1f;
 
     [HideInInspector]
     public Interactabe targetInteractable;
@@ -71,6 +74,11 @@ public class ThirdPersonController : Singleton<ThirdPersonController>
         isMoving = inputDirection.magnitude >= 0.1f;
 
         animator.SetBool("IsMoving", isMoving);
+
+        if (animator != null)
+        {
+            animator.speed = animationSpeed;
+        }
     }
 
     void HandleRotation()

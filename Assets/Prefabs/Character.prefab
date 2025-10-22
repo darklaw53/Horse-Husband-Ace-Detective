@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84b5d520374900d439a1c6d9d25af4d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  caracterController: {fileID: 0}
+  caracterController: {fileID: 6888359110420297952}
 --- !u!1001 &8904707625169670579
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -547,6 +547,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a8470e1a3ef424646a2a116b0bc4efb6, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1105706535865594112, guid: a8470e1a3ef424646a2a116b0bc4efb6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -85.73263
@@ -1005,6 +1009,7 @@ MonoBehaviour:
   cameraRotateSpeed: 100
   useCameraRelativeMovement: 1
   animator: {fileID: 3096635746706254882}
+  animationSpeed: 1
   targetInteractable: {fileID: 0}
   moveEnabled: 1
 --- !u!114 &3531159919043595377
