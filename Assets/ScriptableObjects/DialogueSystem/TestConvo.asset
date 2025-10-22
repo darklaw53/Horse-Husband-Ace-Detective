@@ -23,9 +23,9 @@ MonoBehaviour:
       nextNodeId: 066b02da-0e03-4195-9ec5-8831be292fc5
       isHiddenForAction: 0
     - optionText: bye looser
-      nextNodeId: 2786346e-2138-44af-a5a2-553220012144
+      nextNodeId: 95109746-174d-4178-8d97-c3b4393efa02
       isHiddenForAction: 0
-    position: {x: 88.01709, y: 133.03757}
+    position: {x: 12.81723, y: 116.23752}
     isStartNode: 1
     isActionNode: 0
     actionCommandIds:
@@ -37,7 +37,7 @@ MonoBehaviour:
     - optionText: 
       nextNodeId: 
       isHiddenForAction: 1
-    position: {x: 805.98376, y: 130.37386}
+    position: {x: 730.7835, y: 113.57382}
     isStartNode: 0
     isActionNode: 0
     actionCommandIds: []
@@ -53,7 +53,7 @@ MonoBehaviour:
     - optionText: That makes me SO sad!
       nextNodeId: ae9bc168-c6bb-4428-a052-8052404d71cf
       isHiddenForAction: 0
-    position: {x: 450.1062, y: 133.69997}
+    position: {x: 370.90613, y: 65.69995}
     isStartNode: 0
     isActionNode: 0
     actionCommandIds: []
@@ -66,7 +66,7 @@ MonoBehaviour:
     - optionText: 
       nextNodeId: 
       isHiddenForAction: 1
-    position: {x: 806.0006, y: 296.7005}
+    position: {x: 730.80035, y: 279.90033}
     isStartNode: 0
     isActionNode: 0
     actionCommandIds: []
@@ -76,7 +76,19 @@ MonoBehaviour:
     - optionText: 
       nextNodeId: 
       isHiddenForAction: 1
-    position: {x: 1154.8074, y: 312.70047}
+    position: {x: 1079.6086, y: 295.90027}
     isStartNode: 0
     isActionNode: 0
     actionCommandIds: []
+  - id: 95109746-174d-4178-8d97-c3b4393efa02
+    text: 
+    options:
+    - optionText: 
+      nextNodeId: 
+      isHiddenForAction: 1
+    position: {x: 347.59998, y: 304.69974}
+    isStartNode: 0
+    isActionNode: 1
+    actionCommandIds:
+    - Spin
+    - Flash

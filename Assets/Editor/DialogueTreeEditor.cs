@@ -1,8 +1,6 @@
 using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine.Events;
 
 public class DialogueTreeEditor : EditorWindow
 {
@@ -64,7 +62,7 @@ public class DialogueTreeEditor : EditorWindow
         {
             bool clickedOnNode = false;
 
-            foreach (var node in dialogueTree.nodes)
+            foreach (DialogueTreeSO.DialogueNode node in dialogueTree.nodes)
             {
                 float dynamicHeight = CalculateNodeHeight(node);
                 Rect nodeRect = new Rect(node.position.x, node.position.y, nodeWidth, dynamicHeight);
@@ -90,7 +88,7 @@ public class DialogueTreeEditor : EditorWindow
 
     public static void OpenWithAsset(DialogueTreeSO tree)
     {
-        var window = GetWindow<DialogueTreeEditor>();
+        DialogueTreeEditor window = GetWindow<DialogueTreeEditor>();
         window.titleContent = new GUIContent("Dialogue Tree Editor");
         window.dialogueTree = tree;
     }
@@ -155,7 +153,7 @@ public class DialogueTreeEditor : EditorWindow
         float maxX = float.MinValue;
         float maxY = float.MinValue;
 
-        foreach (var node in dialogueTree.nodes)
+        foreach (DialogueTreeSO.DialogueNode node in dialogueTree.nodes)
         {
             float dynamicHeight = CalculateNodeHeight(node);
             minX = Mathf.Min(minX, node.position.x);
@@ -168,7 +166,7 @@ public class DialogueTreeEditor : EditorWindow
         Vector2 windowCenter = new Vector2(position.width / 2f, position.height / 2f);
         Vector2 offsetToCenter = windowCenter - center;
 
-        foreach (var node in dialogueTree.nodes)
+        foreach (DialogueTreeSO.DialogueNode node in dialogueTree.nodes)
         {
             node.position += offsetToCenter;
         }
@@ -231,7 +229,7 @@ public class DialogueTreeEditor : EditorWindow
 
         if (newStart != node.isStartNode)
         {
-            foreach (var n in dialogueTree.nodes) n.isStartNode = false;
+            foreach (DialogueTreeSO.DialogueNode n in dialogueTree.nodes) n.isStartNode = false;
             node.isStartNode = true;
             EditorUtility.SetDirty(dialogueTree);
         }
@@ -246,7 +244,23 @@ public class DialogueTreeEditor : EditorWindow
             for (int i = 0; i < node.actionCommandIds.Count; i++)
             {
                 EditorGUILayout.BeginHorizontal();
-                node.actionCommandIds[i] = EditorGUILayout.TextField(node.actionCommandIds[i]);
+
+                List<string> availableKeys = DialogueActionKeys.Instance != null
+                    ? DialogueActionKeys.Instance.keys
+                    : new List<string>();
+
+                int currentIndex = Mathf.Max(0, availableKeys.IndexOf(node.actionCommandIds[i]));
+                if (currentIndex == -1 && availableKeys.Count > 0) currentIndex = 0;
+
+                if (availableKeys.Count > 0)
+                {
+                    currentIndex = EditorGUILayout.Popup(currentIndex, availableKeys.ToArray());
+                    node.actionCommandIds[i] = availableKeys[currentIndex];
+                }
+                else
+                {
+                    node.actionCommandIds[i] = EditorGUILayout.TextField("No keys found");
+                }
 
                 if (GUILayout.Button("x", GUILayout.Width(20)))
                 {
@@ -255,6 +269,7 @@ public class DialogueTreeEditor : EditorWindow
                     EditorGUILayout.EndHorizontal();
                     continue;
                 }
+
                 EditorGUILayout.EndHorizontal();
             }
 
@@ -285,7 +300,7 @@ public class DialogueTreeEditor : EditorWindow
         else
         {
             EditorGUI.BeginChangeCheck();
-            var style = EditorStyles.textArea;
+            GUIStyle style = EditorStyles.textArea;
             float minHeight = Mathf.Max(style.CalcHeight(new GUIContent(node.text), nodeWidth - 20), 60f);
             node.text = EditorGUILayout.TextArea(node.text, style, GUILayout.Height(minHeight));
             if (EditorGUI.EndChangeCheck()) EditorUtility.SetDirty(dialogueTree);
@@ -296,7 +311,7 @@ public class DialogueTreeEditor : EditorWindow
 
             for (int i = 0; i < node.options.Count; i++)
             {
-                var opt = node.options[i];
+                DialogueTreeSO.DialogueOption opt = node.options[i];
                 if (opt.isHiddenForAction) continue;
 
                 EditorGUILayout.BeginHorizontal();
@@ -421,18 +436,18 @@ public class DialogueTreeEditor : EditorWindow
     {
         if (dialogueTree.nodes == null) return;
 
-        foreach (var node in dialogueTree.nodes)
+        foreach (DialogueTreeSO.DialogueNode node in dialogueTree.nodes)
         {
             if (!node.isActionNode && node.options != null)
             {
                 int optionIndex = 0;
 
-                foreach (var option in node.options)
+                foreach (DialogueTreeSO.DialogueOption option in node.options)
                 {
                     if (option.isHiddenForAction)
                         continue;
 
-                    var targetNode = dialogueTree.GetNodeById(option.nextNodeId);
+                    DialogueTreeSO.DialogueNode targetNode = dialogueTree.GetNodeById(option.nextNodeId);
                     if (targetNode != null)
                     {
                         Vector2 startPos;
@@ -463,8 +478,8 @@ public class DialogueTreeEditor : EditorWindow
 
             if (node.isActionNode)
             {
-                var option = node.ActionOption;
-                var targetNode = dialogueTree.GetNodeById(option.nextNodeId);
+                DialogueTreeSO.DialogueOption option = node.ActionOption;
+                DialogueTreeSO.DialogueNode targetNode = dialogueTree.GetNodeById(option.nextNodeId);
                 if (targetNode != null)
                 {
                     if (optionButtonRects.TryGetValue(option, out Rect rect))

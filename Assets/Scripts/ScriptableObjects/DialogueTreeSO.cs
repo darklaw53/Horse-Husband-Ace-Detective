@@ -22,7 +22,7 @@ public class DialogueTreeSO : ScriptableObject
         {
             get
             {
-                var hiddenOption = options.Find(opt => opt.isHiddenForAction);
+                DialogueOption hiddenOption = options.Find(opt => opt.isHiddenForAction);
                 if (hiddenOption == null)
                 {
                     hiddenOption = new DialogueOption
