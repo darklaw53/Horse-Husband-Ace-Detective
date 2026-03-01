@@ -368,6 +368,16 @@ public class DialogueTreeEditor : EditorWindow
                 entry.side
             );
 
+            entry.expression = (Expression)EditorGUILayout.EnumPopup(
+                "Expression",
+                entry.expression
+            );
+
+            entry.characterSceneState = (CharacterSceneState)EditorGUILayout.EnumPopup(
+                "Scene Presence",
+                entry.characterSceneState
+            );
+
             node.characters[i] = entry;
 
             if (GUILayout.Button("Remove"))

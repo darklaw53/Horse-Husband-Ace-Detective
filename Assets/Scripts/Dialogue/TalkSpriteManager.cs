@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using static DialogueTreeSO;
 
 public class TalkSpriteManager : MonoBehaviour
@@ -15,10 +16,10 @@ public class TalkSpriteManager : MonoBehaviour
     public GameObject anchorPrefab;     // Transparent Image
     public GameObject talkSpritePrefab; // Visible sprite
 
-    Dictionary<string, TalkSpriteRuntime> activeSprites =
+    public Dictionary<string, TalkSpriteRuntime> activeSprites =
         new Dictionary<string, TalkSpriteRuntime>();
 
-    Dictionary<string, RectTransform> activeAnchors =
+    public Dictionary<string, RectTransform> activeAnchors =
         new Dictionary<string, RectTransform>();
 
     public Transform spawnPointLeft, spawnPointRight;
@@ -66,6 +67,10 @@ public class TalkSpriteManager : MonoBehaviour
                     : spawnPointRight.position
                 );
 
+                runtime.transform.position = (charState.side == HorizDirection.Left
+                    ? spawnPointLeft.position
+                    : spawnPointRight.position);
+
                 activeSprites.Add(charState.character.characterName, runtime);
             }
             else
@@ -74,7 +79,20 @@ public class TalkSpriteManager : MonoBehaviour
                 runtime.SetExpression(GetSprite(charState.character));
             }
 
+            if (charState.characterSceneState == CharacterSceneState.Leave)
+                if (activeSprites.ContainsKey(charState.character.name))
+                    CharacterLeaves(charState.character.name);
+
             runtime.SetAnchor(anchor);
+        }
+    }
+
+    public void CharacterLeaves(string characterName)
+    {
+        if (activeAnchors.TryGetValue(characterName, out var anchor))
+        {
+            if (anchor) Destroy(anchor.gameObject);
+            activeAnchors.Remove(characterName);
         }
     }
 

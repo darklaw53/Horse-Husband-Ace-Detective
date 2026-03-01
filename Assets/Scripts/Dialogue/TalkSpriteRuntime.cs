@@ -44,15 +44,51 @@ public class TalkSpriteRuntime : MonoBehaviour
     {
         Vector2 target;
 
+        RectTransform parentRect = rect.parent as RectTransform;
+
         if (targetAnchor != null)
-            target = targetAnchor.anchoredPosition;
+        {
+            Vector2 localPoint;
+
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                parentRect,
+                RectTransformUtility.WorldToScreenPoint(null, targetAnchor.position),
+                null,
+                out localPoint
+            );
+
+            target = localPoint;
+        }
         else
-            target = offscreenPos;
+        {
+            target = ScreenToLocal(offscreenPos, parentRect);
+        }
 
         rect.anchoredPosition = Vector2.Lerp(
             rect.anchoredPosition,
             target,
             Time.deltaTime * lerpSpeed
         );
+    }
+
+    void OnDisable()
+    {
+        RectTransform parentRect = rect.parent as RectTransform;
+
+        rect.anchoredPosition = ScreenToLocal(offscreenPos, parentRect);
+    }
+
+    Vector2 ScreenToLocal(Vector2 screenPos, RectTransform parentRect)
+    {
+        Vector2 localPoint;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            parentRect,
+            screenPos,
+            null,
+            out localPoint
+        );
+
+        return localPoint;
     }
 }

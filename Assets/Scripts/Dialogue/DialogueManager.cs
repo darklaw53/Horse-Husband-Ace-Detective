@@ -31,6 +31,12 @@ public class DialogueManager : Singleton<DialogueManager>
     public void LoadNode(DialogueNode node)
     {
         currentDialogueNode = node;
+
+        foreach (CharacterInScene character in node.characters)
+        {
+            character.character.currentExpression = character.expression;
+        }
+
         talkSpriteManager.ApplyDialogueNode(node);
         if (currentDialogueNode.isActionNode) ExecuteAction();
         else UpdateText();
@@ -38,6 +44,12 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public void FinishDiologue()
     {
+        foreach (CharacterInScene character in currentDialogueNode.characters)
+        {
+            if (talkSpriteManager.activeSprites.ContainsKey(character.character.name))
+                talkSpriteManager.CharacterLeaves(character.character.name);
+        }
+
         chatBox.SetActive(false);
         ThirdPersonController.Instance.moveEnabled = true;
     }

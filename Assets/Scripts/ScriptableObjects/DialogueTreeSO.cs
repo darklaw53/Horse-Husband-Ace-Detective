@@ -9,11 +9,19 @@ public enum HorizDirection
     Right
 }
 
+public enum CharacterSceneState
+{
+    Stay,
+    Leave
+}
+
 [Serializable]
 public struct CharacterInScene
 {
     public CharacterSO character;
     public HorizDirection side;
+    public CharacterSceneState characterSceneState;
+    public Expression expression;
 }
 
 [CreateAssetMenu(menuName = "Dialogue/Dialogue Tree")]

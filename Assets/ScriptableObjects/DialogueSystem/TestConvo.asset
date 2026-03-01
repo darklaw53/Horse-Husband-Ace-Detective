@@ -25,7 +25,7 @@ MonoBehaviour:
     - optionText: bye looser
       nextNodeId: 95109746-174d-4178-8d97-c3b4393efa02
       isHiddenForAction: 0
-    position: {x: 232.81726, y: 239.23752}
+    position: {x: 282.81726, y: 55.23752}
     isStartNode: 1
     isActionNode: 0
     actionCommandIds:
@@ -34,25 +34,35 @@ MonoBehaviour:
     characters:
     - character: {fileID: 11400000, guid: 3d7fef6f516e3a44c9554ec145902ac7, type: 2}
       side: 0
+      characterSceneState: 0
+      expression: 1
     - character: {fileID: 11400000, guid: da8ab3a8c9a56c34b9b17f6fcfca64a0, type: 2}
       side: 1
+      characterSceneState: 0
+      expression: 0
     speaker: {fileID: 11400000, guid: da8ab3a8c9a56c34b9b17f6fcfca64a0, type: 2}
-    cachedHeight: 400
+    cachedHeight: 480
   - id: b9dcc2f0-32a6-4ae1-a5ec-64b9ffc4cbe5
     text: Yeah well... better gtf outta here bitch!
     options:
     - optionText: 
       nextNodeId: 
       isHiddenForAction: 1
-    position: {x: 956.78345, y: 108.57382}
+    position: {x: 1001.78345, y: -184.42618}
     isStartNode: 0
     isActionNode: 0
     actionCommandIds: []
     characters:
     - character: {fileID: 11400000, guid: da8ab3a8c9a56c34b9b17f6fcfca64a0, type: 2}
       side: 1
+      characterSceneState: 0
+      expression: 3
+    - character: {fileID: 11400000, guid: 3d7fef6f516e3a44c9554ec145902ac7, type: 2}
+      side: 0
+      characterSceneState: 0
+      expression: 2
     speaker: {fileID: 11400000, guid: da8ab3a8c9a56c34b9b17f6fcfca64a0, type: 2}
-    cachedHeight: 291
+    cachedHeight: 438
   - id: 066b02da-0e03-4195-9ec5-8831be292fc5
     text: I hate you
     options:
@@ -65,15 +75,17 @@ MonoBehaviour:
     - optionText: That makes me SO sad!
       nextNodeId: ae9bc168-c6bb-4428-a052-8052404d71cf
       isHiddenForAction: 0
-    position: {x: 581.9061, y: 150.69995}
+    position: {x: 635.9061, y: -75.30005}
     isStartNode: 0
     isActionNode: 0
     actionCommandIds: []
     characters:
     - character: {fileID: 11400000, guid: da8ab3a8c9a56c34b9b17f6fcfca64a0, type: 2}
       side: 1
+      characterSceneState: 0
+      expression: 2
     speaker: {fileID: 11400000, guid: da8ab3a8c9a56c34b9b17f6fcfca64a0, type: 2}
-    cachedHeight: 333
+    cachedHeight: 373
   - id: ae9bc168-c6bb-4428-a052-8052404d71cf
     text: cry me a river pony boy
     options:
@@ -83,37 +95,49 @@ MonoBehaviour:
     - optionText: 
       nextNodeId: 
       isHiddenForAction: 1
-    position: {x: 946.8003, y: 454.90033}
+    position: {x: 994.8003, y: 296.90033}
     isStartNode: 0
     isActionNode: 0
     actionCommandIds: []
     characters:
     - character: {fileID: 11400000, guid: da8ab3a8c9a56c34b9b17f6fcfca64a0, type: 2}
       side: 1
+      characterSceneState: 0
+      expression: 1
+    - character: {fileID: 11400000, guid: 3d7fef6f516e3a44c9554ec145902ac7, type: 2}
+      side: 0
+      characterSceneState: 0
+      expression: 3
     speaker: {fileID: 11400000, guid: da8ab3a8c9a56c34b9b17f6fcfca64a0, type: 2}
-    cachedHeight: 312
+    cachedHeight: 459
   - id: 5628ec70-7823-4923-b4ee-4549543bd824
     text: bye :)
     options:
     - optionText: 
       nextNodeId: 
       isHiddenForAction: 1
-    position: {x: 1298.6086, y: 462.90027}
+    position: {x: 1335.6086, y: 274.90027}
     isStartNode: 0
     isActionNode: 0
     actionCommandIds: []
     characters:
     - character: {fileID: 11400000, guid: da8ab3a8c9a56c34b9b17f6fcfca64a0, type: 2}
+      side: 1
+      characterSceneState: 0
+      expression: 6
+    - character: {fileID: 11400000, guid: 3d7fef6f516e3a44c9554ec145902ac7, type: 2}
       side: 0
+      characterSceneState: 1
+      expression: 3
     speaker: {fileID: 11400000, guid: da8ab3a8c9a56c34b9b17f6fcfca64a0, type: 2}
-    cachedHeight: 291
+    cachedHeight: 438
   - id: 95109746-174d-4178-8d97-c3b4393efa02
     text: 
     options:
     - optionText: 
       nextNodeId: 
       isHiddenForAction: 1
-    position: {x: 583.6, y: 526.6997}
+    position: {x: 633.6, y: 342.6997}
     isStartNode: 0
     isActionNode: 1
     actionCommandIds:
