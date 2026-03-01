@@ -112,7 +112,7 @@ public class CameraEffectsManager : MonoBehaviour
 
     private IEnumerator SpinRoutine(float duration, float speed)
     {
-        Quaternion originalRot = cam.transform.rotation;
+        Quaternion originalRot = cam.transform.localRotation;
 
         float elapsed = 0f;
         while (elapsed < duration)

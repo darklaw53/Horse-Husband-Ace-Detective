@@ -12,7 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52fde1f009660d148baf4f9b7b14cef6, type: 3}
   m_Name: Marcie
   m_EditorClassIdentifier: 
-  charName: Marcie
-  angry: {fileID: -864591001, guid: 95e714ac4197ee044994ea907077efe5, type: 3}
-  sad: {fileID: -1133469412, guid: 95e714ac4197ee044994ea907077efe5, type: 3}
-  happy: {fileID: 936855095, guid: 95e714ac4197ee044994ea907077efe5, type: 3}
+  characterName: Marcie
+  talkSprites:
+  - expression: 0
+    sprite: {fileID: 1708235882274554309, guid: fb843b3e8720ab04695ddb333169516e, type: 3}
+  - expression: 1
+    sprite: {fileID: 1708235882274554309, guid: fb843b3e8720ab04695ddb333169516e, type: 3}
+  - expression: 2
+    sprite: {fileID: 5660228044193007476, guid: 13308e57af31ebd40832a257aece3ef1, type: 3}
+  - expression: 3
+    sprite: {fileID: 5660228044193007476, guid: 13308e57af31ebd40832a257aece3ef1, type: 3}
+  - expression: 4
+    sprite: {fileID: 1708235882274554309, guid: fb843b3e8720ab04695ddb333169516e, type: 3}
+  - expression: 5
+    sprite: {fileID: 1227596580826745019, guid: 91da18f5fbf68aa45b2b4750d0b94e62, type: 3}
+  - expression: 6
+    sprite: {fileID: 1227596580826745019, guid: 91da18f5fbf68aa45b2b4750d0b94e62, type: 3}
+  prefab: {fileID: 0}
+  currentExpression: 0

@@ -48,7 +48,7 @@ public class CylinderBoundaryLimiter : MonoBehaviour
 
         if (distance > maxRadius)
         {
-            rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
+            rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
             controller.moveEnabled = false;
         }
         else

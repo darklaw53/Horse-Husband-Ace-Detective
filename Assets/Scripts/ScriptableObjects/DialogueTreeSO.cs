@@ -3,6 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public enum HorizDirection
+{
+    Left,
+    Right
+}
+
+[Serializable]
+public struct CharacterInScene
+{
+    public CharacterSO character;
+    public HorizDirection side;
+}
+
 [CreateAssetMenu(menuName = "Dialogue/Dialogue Tree")]
 public class DialogueTreeSO : ScriptableObject
 {
@@ -17,6 +30,11 @@ public class DialogueTreeSO : ScriptableObject
 
         public bool isActionNode;
         public List<string> actionCommandIds = new();
+
+        public List<CharacterInScene> characters = new();
+        public CharacterSO speaker;
+
+        public float cachedHeight = 200f;
 
         public DialogueOption ActionOption
         {

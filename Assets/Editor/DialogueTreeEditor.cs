@@ -9,10 +9,8 @@ public class DialogueTreeEditor : EditorWindow
     Vector2 drag;
 
     DialogueTreeSO.DialogueNode selectedNode = null;
-    DialogueTreeSO.DialogueOption selectedOption = null;
 
     const float nodeWidth = 250f;
-    const float nodeHeight = 150f;
 
     private bool isLinking = false;
     private DialogueTreeSO.DialogueNode linkingFromNode = null;
@@ -20,9 +18,6 @@ public class DialogueTreeEditor : EditorWindow
 
     private Rect linkingButtonRect;
     private Dictionary<DialogueTreeSO.DialogueOption, Rect> optionButtonRects = new();
-
-    private float zoom = 1.0f;
-    private Vector2 panOffset = Vector2.zero;
 
     [MenuItem("Window/Dialogue Tree Editor")]
     public static void OpenWindow()
@@ -137,7 +132,6 @@ public class DialogueTreeEditor : EditorWindow
                 path = "Assets" + path.Substring(Application.dataPath.Length);
                 dialogueTree = AssetDatabase.LoadAssetAtPath<DialogueTreeSO>(path);
                 selectedNode = null;
-                selectedOption = null;
             }
         }
         GUILayout.EndHorizontal();
@@ -200,8 +194,12 @@ public class DialogueTreeEditor : EditorWindow
 
     void DrawNode(DialogueTreeSO.DialogueNode node)
     {
-        float height = CalculateNodeHeight(node);
-        Rect nodeRect = new Rect(node.position.x, node.position.y, nodeWidth, height);
+        Rect nodeRect = new Rect(
+            node.position.x,
+            node.position.y,
+            nodeWidth,
+            Mathf.Max(60f, node.cachedHeight)
+        );
 
         if (node.isStartNode || node.isActionNode)
         {
@@ -345,33 +343,156 @@ public class DialogueTreeEditor : EditorWindow
             }
         }
 
+        GUILayout.Space(4);
+        GUILayout.Label("Characters");
+
+        node.characters ??= new List<CharacterInScene>();
+
+        int removeIndex = -1;
+
+        for (int i = 0; i < node.characters.Count; i++)
+        {
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+
+            CharacterInScene entry = node.characters[i];
+
+            entry.character = (CharacterSO)EditorGUILayout.ObjectField(
+                "Character",
+                entry.character,
+                typeof(CharacterSO),
+                false
+            );
+
+            entry.side = (HorizDirection)EditorGUILayout.EnumPopup(
+                "Side",
+                entry.side
+            );
+
+            node.characters[i] = entry;
+
+            if (GUILayout.Button("Remove"))
+            {
+                removeIndex = i;
+            }
+
+            EditorGUILayout.EndVertical();
+        }
+
+        if (removeIndex != -1)
+        {
+            if (node.speaker == node.characters[removeIndex].character)
+                node.speaker = null;
+
+            node.characters.RemoveAt(removeIndex);
+            EditorUtility.SetDirty(dialogueTree);
+        }
+
+        if (GUILayout.Button("+ Add Character"))
+        {
+            node.characters.Add(new CharacterInScene());
+            EditorUtility.SetDirty(dialogueTree);
+        }
+
+        GUILayout.Space(6);
+        GUILayout.Label("Speaker");
+
+        List<CharacterSO> validCharacters = new List<CharacterSO>();
+
+        if (node.characters != null)
+        {
+            foreach (var c in node.characters)
+            {
+                if (c.character != null)
+                    validCharacters.Add(c.character);
+            }
+        }
+
+        if (validCharacters.Count == 0)
+        {
+            EditorGUILayout.HelpBox("Add at least one character.", MessageType.Info);
+            node.speaker = null;
+        }
+        else
+        {
+            int currentIndex = Mathf.Max(0, validCharacters.IndexOf(node.speaker));
+
+            string[] names = new string[validCharacters.Count];
+            for (int i = 0; i < names.Length; i++)
+                names[i] = validCharacters[i].name;
+
+            int newIndex = EditorGUILayout.Popup("Main Speaker", currentIndex, names);
+
+            if (newIndex >= 0 && newIndex < validCharacters.Count)
+            {
+                if (node.speaker != validCharacters[newIndex])
+                {
+                    Undo.RecordObject(dialogueTree, "Change Speaker");
+                    node.speaker = validCharacters[newIndex];
+                    EditorUtility.SetDirty(dialogueTree);
+                }
+            }
+        }
+
+        if (Event.current.type == EventType.Repaint)
+        {
+            float measuredHeight = GUILayoutUtility.GetLastRect().yMax + 10f;
+
+            if (measuredHeight > 0f)
+                node.cachedHeight = measuredHeight;
+        }
+
         GUILayout.EndArea();
         ProcessNodeEvents(nodeRect, node);
     }
 
     float CalculateNodeHeight(DialogueTreeSO.DialogueNode node)
     {
+        float line = EditorGUIUtility.singleLineHeight;
         float height = 0f;
 
-        height += EditorGUIUtility.singleLineHeight * 1.2f;
+        height += line * 1.2f;
+        height += 6f;
 
         GUIStyle textAreaStyle = EditorStyles.textArea;
-        float textHeight = textAreaStyle.CalcHeight(new GUIContent(node.text), nodeWidth - 20);
+        float textHeight = textAreaStyle.CalcHeight(
+            new GUIContent(node.text),
+            nodeWidth - 20
+        );
         textHeight = Mathf.Max(textHeight, 60f);
         height += textHeight;
-        height += EditorGUIUtility.singleLineHeight;
+
+        height += line;
 
         if (!node.isActionNode)
         {
             int optionCount = node.options != null ? node.options.Count : 0;
-            height += optionCount * (EditorGUIUtility.singleLineHeight + 4f);
-            height += EditorGUIUtility.singleLineHeight;
+
+            height += optionCount * (line + 4f);
+            height += line; 
         }
         else
         {
             int actionCount = node.actionCommandIds != null ? node.actionCommandIds.Count : 0;
-            height += actionCount * (EditorGUIUtility.singleLineHeight + 2f);
+
+            height += actionCount * (line + 2f);
+            height += line * 2f;
         }
+
+        height += 10f;
+        height += line;
+
+        int charCount = node.characters != null ? node.characters.Count : 0;
+
+        float charBlockHeight = (line * 2f) + 10f;
+        height += charCount * charBlockHeight;
+        height += line + 4f;
+        height += 6f;
+        height += line;
+
+        if (charCount == 0) height += 36f;
+        else height += line;
+
+        height += 8f;
 
         return height;
     }

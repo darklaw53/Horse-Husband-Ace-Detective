@@ -18,6 +18,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public GameObject chatBox;
     public DialogueActionManager actionManager;
+    public TalkSpriteManager talkSpriteManager;
 
     public void StartDialogue(DialogueTreeSO dialogue)
     {
@@ -30,6 +31,7 @@ public class DialogueManager : Singleton<DialogueManager>
     public void LoadNode(DialogueNode node)
     {
         currentDialogueNode = node;
+        talkSpriteManager.ApplyDialogueNode(node);
         if (currentDialogueNode.isActionNode) ExecuteAction();
         else UpdateText();
     }

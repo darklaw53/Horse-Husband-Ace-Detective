@@ -12,7 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52fde1f009660d148baf4f9b7b14cef6, type: 3}
   m_Name: Joe
   m_EditorClassIdentifier: 
-  charName: Joe
-  angry: {fileID: -796098917, guid: 95e714ac4197ee044994ea907077efe5, type: 3}
-  sad: {fileID: 623439360, guid: 95e714ac4197ee044994ea907077efe5, type: 3}
-  happy: {fileID: -815994655, guid: 95e714ac4197ee044994ea907077efe5, type: 3}
+  characterName: Joe
+  talkSprites:
+  - expression: 0
+    sprite: {fileID: -6533297598206266524, guid: b454697fd0a93fb48a96888e3621b495, type: 3}
+  - expression: 1
+    sprite: {fileID: -6954359050617344607, guid: 2857c9e13c7760c428ba4e00be9723c1, type: 3}
+  - expression: 3
+    sprite: {fileID: -7045961248446584529, guid: 3b312f82872502f43a34455d9edfd865, type: 3}
+  - expression: 2
+    sprite: {fileID: -7045961248446584529, guid: 3b312f82872502f43a34455d9edfd865, type: 3}
+  - expression: 4
+    sprite: {fileID: -6954359050617344607, guid: 2857c9e13c7760c428ba4e00be9723c1, type: 3}
+  - expression: 5
+    sprite: {fileID: -6533297598206266524, guid: b454697fd0a93fb48a96888e3621b495, type: 3}
+  - expression: 6
+    sprite: {fileID: -7045961248446584529, guid: 3b312f82872502f43a34455d9edfd865, type: 3}
+  prefab: {fileID: 0}
+  currentExpression: 0

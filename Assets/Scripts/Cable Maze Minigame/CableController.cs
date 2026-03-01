@@ -43,7 +43,7 @@ public class CableController : MonoBehaviour
             if (!rb)
                 rb = segment.AddComponent<Rigidbody>();
             rb.mass = 0.1f;
-            rb.drag = 0.2f;
+            rb.linearDamping = 0.2f;
 
             rb.constraints = RigidbodyConstraints.FreezeRotationX
                | RigidbodyConstraints.FreezeRotationZ;
