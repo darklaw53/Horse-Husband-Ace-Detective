@@ -30,9 +30,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _KernelSize: 6
-    - _Overlap: 0
-    - _Scaling: 1.09
-    - _Sharpness: 8
+    - _Overlap: 1
+    - _Scaling: 6
+    - _Sharpness: 10
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
