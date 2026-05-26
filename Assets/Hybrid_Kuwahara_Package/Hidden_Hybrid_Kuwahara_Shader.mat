@@ -29,8 +29,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _KernelSize: 6
-    - _Overlap: 1
+    - _KernelSize: 36.13
+    - _Overlap: 0.26
     - _Scaling: 6
     - _Sharpness: 10
     m_Colors: []
